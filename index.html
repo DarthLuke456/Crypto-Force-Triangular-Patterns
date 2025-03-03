@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Force - Enhanced Triangular Design</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/exo-2/1.0/css/exo-2.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;800;900&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Exo 2', sans-serif;
+      color: #fafafa;
+      background-color: #121212;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+    }
+
+    /* Background pattern */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* Triangular patterns - increased density */
+    .triangle-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: 
+        linear-gradient(30deg, transparent 49.5%, #ec4d58 49.5%, #ec4d58 50.5%, transparent 50.5%),
+        linear-gradient(150deg, transparent 49.5%, #ec4d58 49.5%, #ec4d58 50.5%, transparent 50.5%),
+        linear-gradient(270deg, transparent 49.5%, #ec4d58 49.5%, #ec4d58 50.5%, transparent 50.5%);
+      background-size: 40px 40px; /* Smaller triangles = more triangles */
+      background-position: center center;
+    }
+
+    /* Additional triangle overlay */
+    .triangle-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.03;
+      background-image: 
+        linear-gradient(60deg, transparent 49.5%, #fafafa 49.5%, #fafafa 50.5%, transparent 50.5%),
+        linear-gradient(120deg, transparent 49.5%, #fafafa 49.5%, #fafafa 50.5%, transparent 50.5%);
+      background-size: 70px 70px;
+      background-position: center center;
+    }
+
+    /* Small triangle dots */
+    .triangle-dots {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(#fafafa 1px, transparent 1px);
+      background-size: 30px 30px; /* Smaller distance between dots */
+      opacity: 0.04;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      background-position: 0 0;
+    }
+
+    /* Large triangular shapes - added more */
+    .large-triangles::before,
+    .large-triangles::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0.08;
+    }
+
+    .large-triangles::before {
+      top: -100px;
+      right: 10%;
+      border-left: 300px solid transparent;
+      border-right: 300px solid transparent;
+      border-bottom: 500px solid #ec4d58;
+      transform: rotate(15deg);
+    }
+
+    .large-triangles::after {
+      bottom: -200px;
+      left: 5%;
+      border-left: 350px solid transparent;
+      border-right: 350px solid transparent;
+      border-top: 500px solid #ec4d58;
+      transform: rotate(-5deg);
+    }
+
+    /* Additional triangular elements */
+    .triangle-extra::before,
+    .triangle-extra::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0.05;
+    }
+
+    .triangle-extra::before {
+      top: 20%;
+      left: -100px;
+      border-top: 200px solid transparent;
+      border-bottom: 200px solid transparent;
+      border-right: 350px solid #ec4d58;
+      transform: rotate(10deg);
+    }
+
+    .triangle-extra::after {
+      bottom: 30%;
+      right: -150px;
+      border-top: 150px solid transparent;
+      border-bottom: 150px solid transparent;
+      border-left: 300px solid #ec4d58;
+      transform: rotate(-5deg);
+    }
+
+    /* Triangular accent elements - added more */
+    .triangle-accent {
+      position: absolute;
+    }
+
+    .triangle-accent:nth-child(1) {
+      top: 15%;
+      right: 10%;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 100px solid #ec4d58;
+      opacity: 0.6;
+      transform: rotate(30deg);
+    }
+
+    .triangle-accent:nth-child(2) {
+      bottom: 20%;
+      left: 15%;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 70px solid #ec4d58;
+      opacity: 0.6;
+      transform: rotate(-15deg);
+    }
+
+    .triangle-accent:nth-child(3) {
+      top: 30%;
+      left: 20%;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 60px solid #ec4d58;
+      opacity: 0.5;
+      transform: rotate(45deg);
+    }
+
+    .triangle-accent:nth-child(4) {
+      bottom: 35%;
+      right: 25%;
+      width: 0;
+      height: 0;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      border-bottom: 50px solid #ec4d58;
+      opacity: 0.7;
+      transform: rotate(-60deg);
+    }
+
+    /* Multiple pulsating triangular halos */
+    .triangle-halo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(rgba(236, 77, 88, 0.1), transparent 70%);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation: pulse 8s infinite alternate;
+      z-index: -1;
+    }
+
+    .triangle-halo:nth-child(2) {
+      width: 400px;
+      height: 400px;
+      clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+      animation: pulse 12s infinite alternate-reverse;
+      opacity: 0.07;
+    }
+
+    .triangle-halo:nth-child(3) {
+      width: 300px;
+      height: 300px;
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+      animation: pulse 10s infinite alternate;
+      opacity: 0.05;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.05; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); }
+      100% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.1) rotate(5deg); }
+    }
+
+    /* Content styling */
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      line-height: 1;
+      position: relative;
+    }
+
+    .crypto-text {
+      color: #ec4d58;
+      font-weight: 900; /* Ultra-bold weight for CRYPTO */
+      font-size: 4.5rem; /* Larger font size */
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px rgba(236, 77, 88, 0.3);
+      display: inline-block;
+      position: relative;
+    }
+
+    /* Triangle decorations around CRYPTO */
+    .crypto-text::before,
+    .crypto-text::after {
+      content: "▲";
+      position: absolute;
+      color: #ec4d58;
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    .crypto-text::before {
+      top: 10px;
+      left: -15px;
+    }
+
+    .crypto-text::after {
+      top: 10px;
+      right: -15px;
+    }
+
+    .force-text {
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .tagline {
+      font-style: italic;
+      margin: 0 0 2rem;
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      color: rgba(250, 250, 250, 0.8);
+    }
+
+    .quote {
+      font-size: 1.8rem;
+      line-height: 1.5;
+      margin: 1.5rem 0;
+      font-weight: 300;
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    .quote::before,
+    .quote::after {
+      content: """;
+      font-size: 3rem;
+      position: absolute;
+      opacity: 0.2;
+      font-family: Georgia, serif;
+    }
+
+    .quote::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .quote::after {
+      content: """;
+      bottom: -10px;
+      right: 0;
+    }
+    
+    p {
+      margin: 1rem 0;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.85rem 2.5rem;
+      background-color: rgba(236, 77, 88, 0.9);
+      color: #fafafa;
+      text-decoration: none;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 93% 100%, 7% 100%); /* More pronounced triangular edges */
+    }
+
+    .button:hover {
+      background-color: #ec4d58;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Background triangles behind button */
+    .button::before,
+    .button::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .button::before {
+      top: -10px;
+      left: -10px;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid #ec4d58;
+    }
+
+    .button::after {
+      bottom: -10px;
+      right: -10px;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid #ec4d58;
+    }
+
+    .button:hover::before,
+    .button:hover::after {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background elements -->
+  <div class="background">
+    <div class="triangle-grid"></div>
+    <div class="triangle-overlay"></div>
+    <div class="triangle-dots"></div>
+    <div class="large-triangles"></div>
+    <div class="triangle-extra"></div>
+    <div class="triangle-halo"></div>
+    <div class="triangle-halo"></div>
+    <div class="triangle-halo"></div>
+    <div class="triangle-accent"></div>
+    <div class="triangle-accent"></div>
+    <div class="triangle-accent"></div>
+    <div class="triangle-accent"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <h1><span class="crypto-text">CRYPTO</span> <span class="force-text">FORCE</span></h1>
+    <p class="tagline">The dark side of wealth creation</p>
+    <div class="quote">
+      "An investor is someone with ideas that are worth a lot of money."
+    </div>
+    <p>Turn your visionary ideas into financial power. The true strength of the dark side lies not in following markets, but in foreseeing them. Your unique perspective is your greatest asset.</p>
+    <p>Learn to harness your insights through the disciplined path of Crypto Force.</p>
+    <a href="#" class="button">Unleash Your Potential</a>
+  </div>
+</body>
+</html>
